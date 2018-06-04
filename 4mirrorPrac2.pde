@@ -1,4 +1,4 @@
-float mx, my, pointX, pointY;
+float mx, my, X, Y;
 float r;
 float preD;
 
@@ -12,44 +12,37 @@ void setup() {
 
 void draw() {
   translate(mx, my);
-  pointX=mouseX-mx;
-  pointY=mouseY-my;
+  X=mouseX-mx;
+  Y=mouseY-my;
   
-    /*if(dist(pointX,pointY,0,0)>preD){
+    /*if(dist(X,Y,0,0)>preD){
     r++;
-  } else if(dist(pointX,pointY,0,0)==preD){
+  } else if(dist(X,Y,0,0)==preD){
     r+= 0;
   } else if(r>4){
     r--;
   }*/
-  r=dist(pointX, pointY,0,0)*3/50;
+  r=dist(X, Y,0,0)*3/50;
   
   if(mousePressed){
-    fill(255-abs(pointX*255/mx), 0, abs(pointX*127/mx)+abs(pointY*127/my));
-    ellipse(pointX, pointY, r, r);
-    ellipse(-pointX, pointY, r, r);
-    ellipse(pointX, -pointY, r, r);
-    ellipse(-pointX, -pointY, r, r);
-  
-    ellipse(pointY, pointX, r, r);
-    ellipse(-pointY, pointX, r, r);
-    ellipse(pointY, -pointX, r, r);
-    ellipse(-pointY, -pointX, r, r);
-    
+    fill(255-abs(X*255/mx), 0, abs(X*127/mx)+abs(Y*127/my));
+    eightMirrored();
     rotate(PI/4);
     
-    ellipse(X, Y, r, r);
-    ellipse(-X, Y, r, r);
-    ellipse(X, -Y, r, r);
-    ellipse(-X, -Y, r, r);
-  
-    ellipse(Y, X, r, r);
-    ellipse(-Y, X, r, r);
-    ellipse(Y, -X, r, r);
-    ellipse(-Y, -X, r, r);
-
+    eightMirrored();
     rotate(PI/-4);
-    
-    preD = dist(pointX, pointY, 0, 0);
   }
+  preD = dist(X, Y, 0, 0);
+}
+
+void eightMirrored(){
+  ellipse(X, Y, r, r);
+  ellipse(-X, Y, r, r);
+  ellipse(X, -Y, r, r);
+  ellipse(-X, -Y, r, r);
+  
+  ellipse(Y, X, r, r);
+  ellipse(-Y, X, r, r);
+  ellipse(Y, -X, r, r);
+  ellipse(-Y, -X, r, r);
 }
