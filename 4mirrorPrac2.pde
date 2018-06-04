@@ -35,6 +35,21 @@ void draw() {
     ellipse(-pointY, pointX, r, r);
     ellipse(pointY, -pointX, r, r);
     ellipse(-pointY, -pointX, r, r);
+    
+    rotate(PI/4);
+    
+    ellipse(X, Y, r, r);
+    ellipse(-X, Y, r, r);
+    ellipse(X, -Y, r, r);
+    ellipse(-X, -Y, r, r);
+  
+    ellipse(Y, X, r, r);
+    ellipse(-Y, X, r, r);
+    ellipse(Y, -X, r, r);
+    ellipse(-Y, -X, r, r);
+
+    rotate(PI/-4);
+    
     preD = dist(pointX, pointY, 0, 0);
   }
 }
