@@ -24,15 +24,17 @@ void draw() {
   }*/
   r=dist(pointX, pointY,0,0)*3/50;
   
-  fill(255-abs(pointX*255/mx), 0, abs(pointX*127/mx)+abs(pointY*127/my));
-  ellipse(pointX, pointY, r, r);
-  ellipse(-pointX, pointY, r, r);
-  ellipse(pointX, -pointY, r, r);
-  ellipse(-pointX, -pointY, r, r);
+  if(mousePressed){
+    fill(255-abs(pointX*255/mx), 0, abs(pointX*127/mx)+abs(pointY*127/my));
+    ellipse(pointX, pointY, r, r);
+    ellipse(-pointX, pointY, r, r);
+    ellipse(pointX, -pointY, r, r);
+    ellipse(-pointX, -pointY, r, r);
   
-  ellipse(pointY, pointX, r, r);
-  ellipse(-pointY, pointX, r, r);
-  ellipse(pointY, -pointX, r, r);
-  ellipse(-pointY, -pointX, r, r);
-  preD = dist(pointX, pointY, 0, 0);
+    ellipse(pointY, pointX, r, r);
+    ellipse(-pointY, pointX, r, r);
+    ellipse(pointY, -pointX, r, r);
+    ellipse(-pointY, -pointX, r, r);
+    preD = dist(pointX, pointY, 0, 0);
+  }
 }
