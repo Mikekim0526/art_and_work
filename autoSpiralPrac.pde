@@ -2,7 +2,7 @@ float mx, my, X, Y;
 float r,n,k;
 
 void setup() {
-  size(1200, 800);
+  size(600, 600);
   mx=width/2;
   my=height/2;
   background(255);
@@ -16,23 +16,23 @@ void draw() {
   X=mouseX-mx;
   Y=mouseY-my;
   translate(mx, my);
- 
+  point(0,0);
   r=dist(X, Y,0,0)*3/50;
   
-  pushMatrix();
   if(mousePressed){
     fill(255-abs(X*255/mx), 0, abs(X*127/mx)+abs(Y*127/my));
-    eightMirrored();
+    rotate(PI*k/n);
+    k++;
+    mirroredPoint();
   }
-  popMatrix();
-  rotate(PI/3);
-  k++;
+
 }
 
-void eightMirrored(){
+void mirroredPoint(){
   ellipse(X, Y, r, r);
-  ellipse(-X, -Y, r, r);
-  
+  //ellipse(-X, -Y, r, r);
+  //ellipse(X, -Y, r, r);
+  //ellipse(-X, Y, r, r);
   //ellipse(Y, X, r, r);
   //ellipse(-Y, -X, r, r);
 }
