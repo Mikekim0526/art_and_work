@@ -24,6 +24,8 @@ void draw() {
     rotate(PI*k/n);
     k++;
     mirroredPoint();
+  } else{
+    k=1;
   }
 
 }
