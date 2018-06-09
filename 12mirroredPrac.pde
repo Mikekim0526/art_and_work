@@ -15,7 +15,7 @@ void draw() {
   X=mouseX-mx;
   Y=mouseY-my;
   
-  r=dist(X, Y,0,0)*3/50;
+  r=dist(X, Y,0,0)*20;
   
   if(mousePressed){
     fill(255-abs(X*255/mx), 0, abs(X*127/mx)+abs(Y*127/my));
