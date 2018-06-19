@@ -1,5 +1,4 @@
 float X,Y;
-float ang=0;
 float t,y,m,n;
 
 void setup(){
@@ -17,7 +16,6 @@ void draw(){
   y=n*PI/360;
   m=n*PI/30;
   
-  ang=ang+0.1;
   X=270*cos(y);
   Y=270*sin(y);
   fill(50,200,200);
