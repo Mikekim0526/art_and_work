@@ -1,53 +1,107 @@
-//making circle waves due to the water drop effects
-//Now : made "oneRing" function to create sequential drop wave
-// -> the rings have x, y, r=diameter, dep=depth of every ring
+//Applied some IntLists : px, py, rd, mode to record (x,y) coordinate and distance, clickness of every drop point.
+//Made setRingInfo function : record information about mouse coordinate and clickness every moment.
+//Made drawRings function : call oneRing function with rings' information from Lists - px, py, rd, mode
 //Next : make more seeming like water drop -> not constant depth and distance
 
-boolean click = false;
 PImage pebbles;
-int diameter = 50;
-int cMouseX, cMouseY;
+
+IntList px, py;
+IntList rd;
+IntList mode;
+
 int cFrame=0;
-int duration = 50;
+int duration = 60;
+int thickness = 5;
+int period = 5;
+boolean click = false;
 
 void setup() {
-  size(600, 400);
+  size(900, 600);
   frameRate(60);
-
   pebbles = loadImage("pebbles.jpg");
-  pebbles.resize(600, 400);
-
+  pebbles.resize(900, 600);
   image(pebbles, 0, 0);
+
+  px = new IntList();
+  py = new IntList();
+  rd = new IntList();
+  mode = new IntList();
+
+  px.set(1, width/2);
+  py.set(1, height/2);
+  rd.set(1, 0);
+  mode.set(1, 0);
+
+  cFrame = -duration;
+
+  setRingDistance();
 }
 
 void draw() {
   image(pebbles, 0, 0);
 
-  loadPixels();
-  if (frameCount -cFrame <= duration && frameCount > 300) {
-    oneRing(cMouseX, cMouseY, frameCount-cFrame, 5);
-    updatePixels();
+  setRingInfo();
+  drawRings();
+}
+
+void setRingDistance() {
+  for (int i=duration; i>0; i--) {
+    rd.set(i, i);
   }
 }
 
-void oneRing(int x, int y, int r, int dep) {
-  for (int a=0; a<360; a++) {
-    for (int d=0; d<dep; d++) {
+void setRingInfo() {
+  if (mouseX>duration && mouseX<width-duration
+    && mouseY>duration && mouseY<height-duration
+    && click  && frameCount%period==1) {
+    px.set(1, mouseX);
+    py.set(1, mouseY);
+    mode.set(1, 1);
+  } else {
+    mode.set(1, 0);
+  }
+}
 
-      pixels[int(x+cos(a*PI/360)*(r+d)) + int(y-sin(a*PI/360)*(r+d))*width]
-        = pebbles.get(int(x+cos(a*PI/360)*r), int(y-sin(a*PI/360)*r));
-      pixels[int(x+cos(a*PI/360)*(r+d)) + int(y+sin(a*PI/360)*(r+d))*width]
-        = pebbles.get(int(x+cos(a*PI/360)*r), int(y+sin(a*PI/360)*r));
+void drawRings() {
+  if (frameCount<duration) {
+    for (int i=frameCount; i>0; i--) {
+      px.set(i+1, px.get(i));
+      py.set(i+1, py.get(i));
+      mode.set(i+1, mode.get(i));
+      if (mode.get(i)==1) {
+        oneRing(px.get(i), py.get(i), i, thickness);
+      }
+    }
+  } else {
+    for (int i=duration; i>0; i--) {
+      px.set(i+1, px.get(i));
+      py.set(i+1, py.get(i));
+      mode.set(i+1, mode.get(i));
+      if (mode.get(i)==1) {
+        oneRing(px.get(i), py.get(i), i, thickness);
+      }
     }
   }
 }
 
-void mousePressed() {
-  if (click==false) {
-    cMouseX = mouseX;
-    cMouseY = mouseY;
-    cFrame = frameCount;
+void oneRing(int x, int y, int dist, int thick) {
+  loadPixels();
+
+  for (int a=0; a<360; a++) {
+    for (int d=0; d<thick; d++) {
+      pixels[int(x+cos(a*PI/360)*(dist+d)) + int(y-sin(a*PI/360)*(dist+d))*width]
+        = pebbles.get(int(x+cos(a*PI/360)*dist), int(y-sin(a*PI/360)*dist));
+      pixels[int(x+cos(a*PI/360)*(dist+d)) + int(y+sin(a*PI/360)*(dist+d))*width]
+        = pebbles.get(int(x+cos(a*PI/360)*dist), int(y+sin(a*PI/360)*dist));
+    }
   }
+
+  updatePixels();
+}
+
+
+void mousePressed() {
+  cFrame = frameCount;
   click = true;
   println(mouseX, mouseY);
 }
