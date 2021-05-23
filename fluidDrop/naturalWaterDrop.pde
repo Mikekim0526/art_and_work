@@ -1,12 +1,14 @@
 //Applied some IntLists : px, py, rd, mode to record (x,y) coordinate and distance, clickness of every drop point.
 //Made setRingInfo function : record information about mouse coordinate and clickness every moment.
 //Made drawRings function : call oneRing function with rings' information from Lists - px, py, rd, mode
+//add List ap : alpha of dropped color fluid
 //Next : make more seeming like water drop -> not constant depth and distance
 
 PImage pebbles;
 
 IntList px, py;
 IntList rd;
+IntList ap;
 IntList mode;
 
 int cFrame=0;
@@ -21,15 +23,18 @@ void setup() {
   pebbles = loadImage("pebbles.jpg");
   pebbles.resize(900, 600);
   image(pebbles, 0, 0);
+  noStroke();
 
   px = new IntList();
   py = new IntList();
   rd = new IntList();
+  ap = new IntList();
   mode = new IntList();
 
   px.set(1, width/2);
   py.set(1, height/2);
   rd.set(1, 0);
+  ap.set(1, 0);
   mode.set(1, 0);
 
   cFrame = -duration;
@@ -45,8 +50,11 @@ void draw() {
 }
 
 void setRingDistance() {
+  float alpha =0;
   for (int i=duration; i>0; i--) {
+    alpha = 50-sqrt(i/2*duration);
     rd.set(i, i);
+    ap.set(i, int(alpha));
   }
 }
 
@@ -70,6 +78,8 @@ void drawRings() {
       mode.set(i+1, mode.get(i));
       if (mode.get(i)==1) {
         oneRing(px.get(i), py.get(i), i, thickness);
+        fill(255, 0, 0, ap.get(i));
+        ellipse(px.get(i), py.get(i), 2*(thickness+i), 2*(thickness+i));
       }
     }
   } else {
@@ -79,6 +89,8 @@ void drawRings() {
       mode.set(i+1, mode.get(i));
       if (mode.get(i)==1) {
         oneRing(px.get(i), py.get(i), i, thickness);
+        fill(255, 0, 0, ap.get(i));
+        ellipse(px.get(i), py.get(i), 2*(thickness+i), 2*(thickness+i));
       }
     }
   }
